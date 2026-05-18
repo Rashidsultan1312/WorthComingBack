@@ -1,24 +1,32 @@
-//
-//  ContentView.swift
-//  Worth Coming Back
-//
-//  Created by Артём Коротков on 31.03.2026.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject private var appViewModel: AppViewModel
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if appViewModel.isLoading {
+                LoadingView()
+            } else if !appViewModel.hasSeenOnboarding {
+                OnboardingView {
+                    appViewModel.completeOnboarding()
+                }
+            } else {
+                MainTabView(selectedTab: $appViewModel.selectedTab)
+            }
         }
-        .padding()
+        .animation(.easeInOut(duration: 0.35), value: appViewModel.isLoading)
+        .animation(.easeInOut(duration: 0.35), value: appViewModel.hasSeenOnboarding)
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let store = PlacesStore.preview
+        let viewModel = AppViewModel(store: store)
+        return ContentView()
+            .environmentObject(viewModel)
+            .environmentObject(store)
+    }
 }
