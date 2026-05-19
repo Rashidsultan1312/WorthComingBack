@@ -11,9 +11,9 @@ workflows:
       xcode: latest
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.app.worthcomingback
+        bundle_identifier: com.app.Worth-Coming-Back
       vars:
-        BUNDLE_ID: "com.app.worthcomingback"
+        BUNDLE_ID: "com.app.Worth-Coming-Back"
         XCODE_PROJECT: "Worth Coming Back.xcodeproj"
         XCODE_SCHEME: "Worth Coming Back"
         APP_STORE_APPLE_ID: "6761690846"
